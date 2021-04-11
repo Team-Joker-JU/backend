@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: IMS-API-SPECIFICATION
+  version: '1.0'
+  description: Intelligent Mobile Systems | Powered By Husqvarna Robotics®
+  contact: {}
+  license:
+    name: 'MIT '
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: 'http://127.0.0.1'
+    description: Cloudflare Workers
+paths: {}
+components:
+  schemas: {}
