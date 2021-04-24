@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "faunadb": "^4.2.0",
-    "itty-router": "^2.3.6"
+    "itty-router": "^2.3.6",
+    "worktop": "^0.4.2"
   },
   "config": {
     "commitizen": {
