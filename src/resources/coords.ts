@@ -16,6 +16,7 @@ const {
   Let,
   Var,
   Update,
+  Equals,
 } = faunadb.query;
 
 async function postCoord(request: Request) {
@@ -30,7 +31,7 @@ async function postCoord(request: Request) {
         data: {
           X: content.X,
           Y: content.Y,
-          session: 0,
+          session: content.session,
         },
       }),
     );
@@ -48,11 +49,14 @@ const getAllCoords = async (request: Request) => {
   };
 
   try {
-    const id = 296843889070834181;
+    /* Feel free to improve, couldn't find how to extract params */
+    const url = request.url;
+    var n = url.lastIndexOf('/');
+    var sessionID = url.substring(n + 1);
+    console.log(sessionID);
     const result = await faunaClient.query(
-      Get(Ref(Collection('coordinates'), id)),
+      Get(Ref(Collection('coordinates'), sessionID)),
     );
-    console.log(result);
     return new Response(JSON.stringify(result), { headers });
   } catch (error) {
     console.log(error);
