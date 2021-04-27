@@ -42,7 +42,7 @@ async function postCoord(request: Request) {
   }
 }
 
-const getAllCoords = async (request: Request) => {
+const getCoordBySession = async (request: Request) => {
   const headers = {
     'Content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -64,4 +64,4 @@ const getAllCoords = async (request: Request) => {
   }
 };
 
-export { postCoord, getAllCoords };
+export { postCoord, getCoordBySession };
