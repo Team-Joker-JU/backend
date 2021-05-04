@@ -17,6 +17,9 @@ const {
   Var,
   Update,
   Equals,
+  Exists,
+  If,
+  Append,
 } = faunadb.query;
 
 async function postCoord(request: Request) {
@@ -26,34 +29,55 @@ async function postCoord(request: Request) {
   };
   try {
     const content = await request.json();
+
     const result = await faunaClient.query(
-      Create(Collection('coordinates'), {
-        data: {
-          X: content.X,
-          Y: content.Y,
-          session: content.session,
+      Let(
+        {
+          ref: Match(Index('getSession'), content.session),
+          doc: Get(Var('ref')),
+          array: Select(['data', 'points'], Var('doc')),
+          upsert: If(
+            Exists(Var('ref')),
+            Update(Select(['ref'], Get(Var('doc'))), {
+              data: {
+                points: Append({ X: content.X, Y: content.Y }, Var('array')),
+              },
+            }),
+
+            Create(Collection('coordinates'), {
+              data: {
+                points: [{ X: content.X, Y: content.Y }],
+                session: content.session,
+              },
+            }),
+          ),
         },
-      }),
+        Var('upsert'),
+      ),
     );
+
+    console.log(result);
+
     return new Response(JSON.stringify(result), { headers });
   } catch (error) {
     const faunaError = getFaunaError(error);
+    console.error(error);
+    console.error(error.requestResult);
     return new Response(JSON.stringify(faunaError.status), { headers });
   }
 }
 
-const getCoordBySession = async (request: Request) => {
+const getCoordsBySession = async (request: Request) => {
   const headers = {
     'Content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   };
 
   try {
-    /* Feel free to improve, couldn't find how to extract params */
-    const url = request.url;
-    var n = url.lastIndexOf('/');
-    var sessionID = url.substring(n + 1);
+    // @ts-ignore
+    const sessionID = request.params.session;
     console.log(sessionID);
+
     const result = await faunaClient.query(
       Get(Ref(Collection('coordinates'), sessionID)),
     );
@@ -64,4 +88,4 @@ const getCoordBySession = async (request: Request) => {
   }
 };
 
-export { postCoord, getCoordBySession };
+export { postCoord, getCoordsBySession };
