@@ -34,20 +34,21 @@ async function postCoord(request: Request) {
       Let(
         {
           ref: Match(Index('getSession'), content.session),
-          doc: Get(Var('ref')),
-          array: Select(['data', 'points'], Var('doc')),
           upsert: If(
             Exists(Var('ref')),
-            Update(Select(['ref'], Get(Var('doc'))), {
+            Update(Select(['ref'],
+            Get(Var('ref'))),
+            {
               data: {
-                points: Append({ X: content.X, Y: content.Y }, Var('array')),
+                points: Append({ X: content.X, Y: content.Y }, Select(['data', 'points'], Get(Var('ref')))),
               },
             }),
 
             Create(Collection('coordinates'), {
               data: {
-                points: [{ X: content.X, Y: content.Y }],
                 session: content.session,
+                points: [{ X: content.X, Y: content.Y }]
+                
               },
             }),
           ),
@@ -55,15 +56,12 @@ async function postCoord(request: Request) {
         Var('upsert'),
       ),
     );
-
-    console.log(result);
-
+  
     return new Response(JSON.stringify(result), { headers });
   } catch (error) {
     const faunaError = getFaunaError(error);
-    console.error(error);
-    console.error(error.requestResult);
-    return new Response(JSON.stringify(faunaError.status), { headers });
+
+    return new Response(JSON.stringify(faunaError), { headers });
   }
 }
 
