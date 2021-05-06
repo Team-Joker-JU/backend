@@ -1,7 +1,9 @@
 const Example = () => {
-  const body = JSON.stringify(null);
+  const body = {
+    work: 'ing',
+  };
   const headers = { 'Content-type': 'application/json' };
-  return new Response(body, { headers });
+  return new Response(JSON.stringify(body), { headers });
 };
 
 export default Example;
