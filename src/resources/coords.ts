@@ -1,6 +1,6 @@
 import { faunaClient } from '../config/db';
 import { getFaunaError } from '../config/faunaUtils';
-import faunadb from 'faunadb';
+import faunadb, { Any } from 'faunadb';
 const {
   Create,
   Collection,
@@ -20,6 +20,10 @@ const {
   Exists,
   If,
   Append,
+  Documents,
+  Map,
+  Lambda,
+  Reverse,
 } = faunadb.query;
 
 async function postCoord(request: Request) {
@@ -36,19 +40,19 @@ async function postCoord(request: Request) {
           ref: Match(Index('getSession'), content.session),
           upsert: If(
             Exists(Var('ref')),
-            Update(Select(['ref'],
-            Get(Var('ref'))),
-            {
+            Update(Select(['ref'], Get(Var('ref'))), {
               data: {
-                points: Append({ X: content.X, Y: content.Y }, Select(['data', 'points'], Get(Var('ref')))),
+                points: Append(
+                  { collision: false, X: content.X, Y: content.Y },
+                  Select(['data', 'points'], Get(Var('ref'))),
+                ),
               },
             }),
 
             Create(Collection('coordinates'), {
               data: {
                 session: content.session,
-                points: [{ X: content.X, Y: content.Y }]
-                
+                points: [{ collision: false, X: content.X, Y: content.Y }],
               },
             }),
           ),
@@ -56,7 +60,7 @@ async function postCoord(request: Request) {
         Var('upsert'),
       ),
     );
-  
+
     return new Response(JSON.stringify(result), { headers });
   } catch (error) {
     const faunaError = getFaunaError(error);
@@ -65,7 +69,7 @@ async function postCoord(request: Request) {
   }
 }
 
-const getCoordsBySession = async (request: Request) => {
+const getCoordsByPage = async (request: Request) => {
   const headers = {
     'Content-type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -73,17 +77,54 @@ const getCoordsBySession = async (request: Request) => {
 
   try {
     // @ts-ignore
-    const sessionID = request.params.session;
-    console.log(sessionID);
+    const page = request.params.page;
+
+    const getCorrect = await faunaClient.query(
+      Map(
+        Paginate(Match(Index('all_coords')), {
+          size: (page - 1) * 5,
+          before: null,
+        }),
+
+        Lambda('X', Get(Var('X'))),
+      ),
+    );
+
+    var before = null;
+    if (page != 1) {
+      // @ts-ignore
+      before = getCorrect.data[0].ref.value.id;
+    }
 
     const result = await faunaClient.query(
-      Get(Ref(Collection('coordinates'), sessionID)),
+      Map(
+        Reverse(
+          Paginate(Match(Index('all_coords')), {
+            size: 5,
+            before:
+              before === null
+                ? before
+                : [Ref(Collection('coordinates'), before)],
+          }),
+        ),
+        Lambda('X', Get(Var('X'))),
+      ),
     );
-    return new Response(JSON.stringify(result), { headers });
+
+    //Translate for front end
+    var coordinates: any[] = [];
+
+    // @ts-ignore
+    for (let index = 0; index < result.data.length; index++) {
+      // @ts-ignore
+      coordinates.push(result.data[index].data.points);
+    }
+
+    return new Response(JSON.stringify(coordinates), { headers });
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify(error), { headers });
   }
 };
 
-export { postCoord, getCoordsBySession };
+export { postCoord, getCoordsByPage };
