@@ -9,28 +9,28 @@ const {
   Get,
   Ref,
   Paginate,
-  Sum,
-  Delete,
-  Add,
   Select,
   Let,
   Var,
   Update,
-  Equals,
   Exists,
   If,
   Append,
-  Documents,
   Map,
   Lambda,
   Reverse,
 } = faunadb.query;
 
+const headers = {
+  'Content-type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
+/**
+ * Posting coords to database
+ * Include session and X,Y coordinate in a json object
+ */
 async function postCoord(request: Request) {
-  const headers = {
-    'Content-type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  };
   try {
     const content = await request.json();
 
@@ -64,17 +64,15 @@ async function postCoord(request: Request) {
     return new Response(JSON.stringify(result), { headers });
   } catch (error) {
     const faunaError = getFaunaError(error);
-
     return new Response(JSON.stringify(faunaError), { headers });
   }
 }
 
+/**
+ * Getting coordinates from database
+ * Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes
+ */
 const getCoordsByPage = async (request: Request) => {
-  const headers = {
-    'Content-type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  };
-
   try {
     // @ts-ignore
     const page = request.params.page;
