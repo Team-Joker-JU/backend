@@ -136,6 +136,7 @@ wrangler publish
         }
             </pre>
         </td>
+        <td></td>
         <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
     </tr>
 </table>
