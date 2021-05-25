@@ -99,7 +99,8 @@ wrangler publish
         <td>GET /api/coord/:page</td>
         <td>-</td>
         <td>
-            [
+    ```json
+    [
     [
         {
             "collision": false,
@@ -120,6 +121,7 @@ wrangler publish
         }
     ]
             ]
+            ```
         </td>   
         <td>Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
     </tr>
