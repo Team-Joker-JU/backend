@@ -87,3 +87,52 @@ This project uses [`prettier`](https://prettier.io/) to format each files equall
 wrangler publish
 ```
 
+### 🖥️ Usage and endpoints
+<table border=1>
+    <tr>
+        <th>Endpoint</th>
+        <th>Body</th>
+        <th>Response</th>
+        <th>Additional Information</th>
+    </tr>
+    <tr>
+        <td>GET /api/coord/:page</td>
+        <td>-</td>
+        <td>
+            [
+    [
+        {
+            "collision": false,
+            "X": 10,
+            "Y": 10
+        }
+    ],
+    [
+        {
+            "collision": false,
+            "X": 9,
+            "Y": 0
+        },
+        {
+            "collision": false,
+            "X": 5,
+            "Y": 5
+        }
+    ]
+            ]
+        </td>   
+        <td>Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
+    </tr>
+    <tr>
+        <td>POST /api/coord</td>
+        <td> Example
+        {
+    "X":10,
+    "Y":10,
+    "session":14
+}
+        </td>
+        <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
+    </tr>
+</table>
+
