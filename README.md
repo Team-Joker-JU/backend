@@ -100,27 +100,27 @@ wrangler publish
         <td>-</td>
         <td>
     <pre>
+[
     [
-        [
-            {
-                "collision": false,
-                "X": 10,
-                "Y": 10
-            }
-        ],
-        [
-            {
-                "collision": false,
-                "X": 9,
-                "Y": 0
-            },
-            {
-                "collision": false,
-                "X": 5,
-                "Y": 5
-            }
-        ]
+        {
+            "collision": false,
+            "X": 10,
+            "Y": 10
+        }
+    ],
+    [
+        {
+            "collision": false,
+            "X": 9,
+            "Y": 0
+        },
+        {
+            "collision": false,
+            "X": 5,
+            "Y": 5
+        }
     ]
+]
            </pre>
         </td>   
         <td>Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
@@ -129,42 +129,42 @@ wrangler publish
         <td>POST /api/coord</td>
         <td>
             <pre>
-        {
-            "X":10,
-            "Y":10,
-            "session":14
-        }
+{
+    "X":10,
+    "Y":10,
+    "session":14
+}
             </pre>
         </td>
         <td>
             <pre>
-            {
-    "ref": {
-        "@ref": {
-            "id": "299604759421125121",
-            "collection": {
-                "@ref": {
-                    "id": "coordinates",
-                    "collection": {
-                        "@ref": {
-                            "id": "collections"
-                        }
+{
+"ref": {
+    "@ref": {
+        "id": "299604759421125121",
+        "collection": {
+            "@ref": {
+                "id": "coordinates",
+                "collection": {
+                    "@ref": {
+                        "id": "collections"
                     }
                 }
             }
         }
-    },
-    "ts": 1621984214160000,
-    "data": {
-        "session": 15,
-        "points": [
-            {
-                "collision": false,
-                "X": 10,
-                "Y": 10
-            }
-        ]
     }
+},
+"ts": 1621984214160000,
+"data": {
+    "session": 15,
+    "points": [
+        {
+            "collision": false,
+            "X": 10,
+            "Y": 10
+        }
+    ]
+}
             </pre>
         </td>
         <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
