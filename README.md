@@ -59,3 +59,30 @@ This project uses [`prettier`](https://prettier.io/) to format each files equall
 ### 😎 Publish
 
 _This part will be written soon..._
+
+
+# 📄 Documentation
+
+## Dependencies
+<table border=1>
+    <tr>
+        <th>Name</th>
+        <th>Terminal command</th>
+        <th>Download link</th>
+    </tr>
+    <tr>
+        <td>itty-router</td>
+        <td>npm i itty-router</td>
+        <td>https://www.npmjs.com/package/itty-router</td>       
+    </tr>
+    <tr>
+        <td>wrangler</td>
+        <td>npm i @cloudflare/wrangler -g</td>
+        <td>https://developers.cloudflare.com/workers/cli-wrangler/install-update</td>
+    </tr>
+    <tr>
+        <td>faunadb</td>
+        <td>npm i faunadb</td>
+        <td>https://docs.fauna.com/fauna/current/drivers/javascript.html</td>
+    </tr>
+</table>
