@@ -92,7 +92,7 @@ wrangler publish
     <tr>
         <th>Endpoint</th>
         <th>Body</th>
-        <th>Response</th>
+        <th>Example response</th>
         <th>Additional Information</th>
     </tr>
     <tr>
@@ -100,28 +100,27 @@ wrangler publish
         <td>-</td>
         <td>
     <pre>
-    json
     [
-    [
-        {
-            "collision": false,
-            "X": 10,
-            "Y": 10
-        }
-    ],
-    [
-        {
-            "collision": false,
-            "X": 9,
-            "Y": 0
-        },
-        {
-            "collision": false,
-            "X": 5,
-            "Y": 5
-        }
+        [
+            {
+                "collision": false,
+                "X": 10,
+                "Y": 10
+            }
+        ],
+        [
+            {
+                "collision": false,
+                "X": 9,
+                "Y": 0
+            },
+            {
+                "collision": false,
+                "X": 5,
+                "Y": 5
+            }
+        ]
     ]
-            ]
            </pre>
         </td>   
         <td>Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
