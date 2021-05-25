@@ -127,7 +127,6 @@ wrangler publish
     </tr>
     <tr>
         <td>POST /api/coord</td>
-        <td> 
             <pre>
         {
             "X":10,
@@ -135,7 +134,6 @@ wrangler publish
             "session":14
         }
             </pre>
-        </td>
         <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
     </tr>
 </table>
