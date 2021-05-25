@@ -91,7 +91,7 @@ wrangler publish
 <table border=1>
     <tr>
         <th>Endpoint</th>
-        <th>Body</th>
+        <th>Example body</th>
         <th>Example response</th>
         <th>Additional Information</th>
     </tr>
@@ -127,12 +127,14 @@ wrangler publish
     </tr>
     <tr>
         <td>POST /api/coord</td>
-        <td> Example
+        <td> 
+            <pre>
         {
-    "X":10,
-    "Y":10,
-    "session":14
-}
+            "X":10,
+            "Y":10,
+            "session":14
+        }
+            </pre>
         </td>
         <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
     </tr>
