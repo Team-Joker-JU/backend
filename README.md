@@ -136,7 +136,37 @@ wrangler publish
         }
             </pre>
         </td>
-        <td></td>
+        <td>
+            <pre>
+            {
+    "ref": {
+        "@ref": {
+            "id": "299604759421125121",
+            "collection": {
+                "@ref": {
+                    "id": "coordinates",
+                    "collection": {
+                        "@ref": {
+                            "id": "collections"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "ts": 1621984214160000,
+    "data": {
+        "session": 15,
+        "points": [
+            {
+                "collision": false,
+                "X": 10,
+                "Y": 10
+            }
+        ]
+    }
+            </pre>
+        </td>
         <td>Provide a X and Y value as well as a session (this allows you to add coordinates to an existing session, provide non existing session to create a new)</td>
     </tr>
 </table>
