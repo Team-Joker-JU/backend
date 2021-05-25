@@ -123,7 +123,7 @@ wrangler publish
 ]
            </pre>
         </td>   
-        <td>Example: /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
+        <td> /api/coord/1 will give the newest 5 routes, /2 will give the second newest 5 routes</td>
     </tr>
     <tr>
         <td>POST /api/coord</td>
