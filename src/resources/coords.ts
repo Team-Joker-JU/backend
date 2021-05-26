@@ -43,7 +43,7 @@ async function postCoord(request: Request) {
             Update(Select(['ref'], Get(Var('ref'))), {
               data: {
                 points: Append(
-                  { collision: false, X: content.X, Y: content.Y },
+                  { collision: content.collision, X: content.X, Y: content.Y },
                   Select(['data', 'points'], Get(Var('ref'))),
                 ),
               },
@@ -52,7 +52,9 @@ async function postCoord(request: Request) {
             Create(Collection('coordinates'), {
               data: {
                 session: content.session,
-                points: [{ collision: false, X: content.X, Y: content.Y }],
+                points: [
+                  { collision: content.collision, X: content.X, Y: content.Y },
+                ],
               },
             }),
           ),
