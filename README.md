@@ -130,6 +130,7 @@ wrangler publish
         <td>
             <pre>
 {
+    "collision": false,
     "X":10,
     "Y":10,
     "session":14
