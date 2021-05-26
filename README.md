@@ -11,7 +11,7 @@ A 'Cloudflare Workers' API made in TypeScript.
     <tr>
         <th>Name</th>
         <th>Terminal command</th>
-        <th>Download link</th>
+        <th>Website</th>
     </tr>
     <tr>
         <td>itty-router</td>
